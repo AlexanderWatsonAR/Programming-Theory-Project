@@ -5,16 +5,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float movementSpeed;
-    [SerializeField] float turnSpeed;
     [SerializeField] GameObject projectivePrefab;
     [SerializeField] float shootSpeed;
 
     Camera mainCam;
+    Animator animator;
 
 
     void Start()
     {
         mainCam = Camera.main;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,9 +35,12 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 move = new Vector3(horizontalInput, 0, verticalInput);
+        float speed = Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput);
 
-        transform.position += movementSpeed * Time.deltaTime * move;
+        animator.SetFloat("Speed_f", speed);
+
+        transform.Translate(verticalInput * movementSpeed * Time.deltaTime * Vector3.forward);
+        transform.Translate(horizontalInput * movementSpeed * Time.deltaTime * Vector3.right);
     }
 
     void LookAtCursor()
