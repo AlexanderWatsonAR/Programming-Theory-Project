@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour
 
     Camera mainCam;
     Animator animator;
+    CharacterController characterController;
 
 
     void Start()
     {
         mainCam = Camera.main;
         animator = GetComponent<Animator>();
+        characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -39,8 +41,14 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("Speed_f", speed);
 
-        transform.Translate(verticalInput * movementSpeed * Time.deltaTime * Vector3.forward);
-        transform.Translate(horizontalInput * movementSpeed * Time.deltaTime * Vector3.right);
+        Vector3 horizontalTranslation = verticalInput * movementSpeed * Time.deltaTime * transform.forward;
+        Vector3 verticalTranslation = horizontalInput * movementSpeed * Time.deltaTime * transform.right;
+
+        characterController.Move(horizontalTranslation + verticalTranslation);
+
+
+       // transform.Translate();
+        //transform.Translate(horizontalInput * movementSpeed * Time.deltaTime * Vector3.right);
     }
 
     void LookAtCursor()
