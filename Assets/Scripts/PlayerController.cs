@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] Weapon weapon;
     [SerializeField] float movementSpeed;
-    [SerializeField] GameObject projectivePrefab;
-    [SerializeField] float shootSpeed;
+
+    private static Vector3 direction;
+
+    public static Vector3 Direction { get { return direction; } private set { direction = value; } }
 
     Camera mainCam;
     Animator animator;
     CharacterController characterController;
-
 
     void Start()
     {
@@ -19,8 +22,6 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         Movement();
@@ -37,18 +38,14 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        float speed = Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput);
-
-        animator.SetFloat("Speed_f", speed);
+        float speed = (Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput)) * 2;
 
         Vector3 horizontalTranslation = verticalInput * movementSpeed * Time.deltaTime * transform.forward;
         Vector3 verticalTranslation = horizontalInput * movementSpeed * Time.deltaTime * transform.right;
 
+        animator.SetFloat("Speed_f", speed);
+
         characterController.Move(horizontalTranslation + verticalTranslation);
-
-
-       // transform.Translate();
-        //transform.Translate(horizontalInput * movementSpeed * Time.deltaTime * Vector3.right);
     }
 
     void LookAtCursor()
@@ -60,10 +57,17 @@ public class PlayerController : MonoBehaviour
         Vector3 cursorWorldPosition = ray.GetPoint(distanceFromCamera);
         cursorWorldPosition.Scale(new Vector3(1, 0, 1));
         transform.forward = transform.position.DirectionToTarget(cursorWorldPosition); // Alt could use transform.LookAt(worldPosition)
+        Direction = transform.forward;
     }
 
     void Attack()
     {
         float fireInput = Input.GetAxis("Fire1");
+
+        if (fireInput == 1 && !weapon.InUse)
+        {
+            animator.Play("Character_Handgun_Shoot");
+            weapon.Attack();
+        }
     }
 }
