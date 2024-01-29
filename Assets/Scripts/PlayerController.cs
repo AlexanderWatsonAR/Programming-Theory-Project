@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Weapon weapon;
+    [SerializeField] float health;
     [SerializeField] float movementSpeed;
 
     private static Vector3 direction;
