@@ -4152,7 +4152,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1001149913918544319, guid: 3a42e1a71488cab4f957afe453af7f04, type: 3}
       propertyPath: m_MovementSpeed
-      value: 5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2658028500349751033, guid: 3a42e1a71488cab4f957afe453af7f04, type: 3}
+      propertyPath: useSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2658028500349751033, guid: 3a42e1a71488cab4f957afe453af7f04, type: 3}
       propertyPath: m_Projectile
@@ -4164,7 +4168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2658028500349751033, guid: 3a42e1a71488cab4f957afe453af7f04, type: 3}
       propertyPath: m_ProjectileSpeed
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2658028500349751033, guid: 3a42e1a71488cab4f957afe453af7f04, type: 3}
       propertyPath: m_ProjectileDamage

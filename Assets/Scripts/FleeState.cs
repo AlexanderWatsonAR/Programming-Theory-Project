@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-// TODO: Flee from target. If target collides will wall stop & heal.
-// If target stops at wall & player is still in range of attack, attack player.
-
 public class FleeState : BehaviourState
 {
 
