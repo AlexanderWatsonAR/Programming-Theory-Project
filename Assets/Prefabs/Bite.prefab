@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6016497924566870463}
   - component: {fileID: 6996544049239511421}
+  - component: {fileID: 6281226558454403936}
   m_Layer: 0
   m_Name: Bite
   m_TagString: Untagged
@@ -46,5 +47,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useSpeed: 1
   inUse: 0
-  damage: 5
-  fieldOfView: 0.5
+  m_Damage: 0.5
+  m_DamageToken: {fileID: 40155219901719398, guid: 67ba7ec459dbada48844c2990f67c3b4, type: 3}
+  m_TokenLocation: {x: -3.345097, y: 0, z: -9.299999}
+--- !u!65 &6281226558454403936
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951574204441947902}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.2, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}

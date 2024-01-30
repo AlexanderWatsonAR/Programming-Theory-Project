@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 // TODO: Flee from target. If target collides will wall stop & heal.
@@ -7,13 +9,22 @@ using UnityEngine;
 
 public class FleeState : BehaviourState
 {
+
+    public FleeState(PlayerController player, Enemy enemy) : base(player, enemy)
+    {
+        
+    }
+
     public override void Attack()
     {
-        throw new System.NotImplementedException();
+        //
     }
 
     public override void Movement()
     {
-        throw new System.NotImplementedException();
+        Vector3 dirAwayFromPlayer = Extensions.DirectionToTarget(m_Player.transform.position, m_Enemy.transform.position);
+        m_Enemy.transform.forward = dirAwayFromPlayer;
+        m_EnemyController.Move(m_Enemy.MovementSpeed * Time.deltaTime * dirAwayFromPlayer);
+
     }
 }

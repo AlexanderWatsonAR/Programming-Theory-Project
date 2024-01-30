@@ -5,14 +5,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Weapon weapon;
-    [SerializeField] float health;
-    [SerializeField] float movementSpeed;
+    [SerializeField] Weapon m_Weapon;
+    [SerializeField] float m_HitPoints;
+    [SerializeField] float m_MovementSpeed;
 
-    private static Vector3 direction;
-
-    public static Vector3 Direction { get { return direction; } private set { direction = value; } }
-
+    public float HitPoints 
+    { 
+        get 
+        {
+            return m_HitPoints;
+        }
+        
+        set 
+        {
+            m_HitPoints = value; 
+        }
+    }
+    
     Camera mainCam;
     Animator animator;
     CharacterController characterController;
@@ -41,8 +50,8 @@ public class PlayerController : MonoBehaviour
 
         float speed = (Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput)) * 2;
 
-        Vector3 horizontalTranslation = verticalInput * movementSpeed * Time.deltaTime * transform.forward;
-        Vector3 verticalTranslation = horizontalInput * movementSpeed * Time.deltaTime * transform.right;
+        Vector3 horizontalTranslation = verticalInput * m_MovementSpeed * Time.deltaTime * transform.forward;
+        Vector3 verticalTranslation = horizontalInput * m_MovementSpeed * Time.deltaTime * transform.right;
 
         animator.SetFloat("Speed_f", speed);
 
@@ -58,17 +67,16 @@ public class PlayerController : MonoBehaviour
         Vector3 cursorWorldPosition = ray.GetPoint(distanceFromCamera);
         cursorWorldPosition.Scale(new Vector3(1, 0, 1));
         transform.forward = transform.position.DirectionToTarget(cursorWorldPosition); // Alt could use transform.LookAt(worldPosition)
-        Direction = transform.forward;
     }
 
     void Attack()
     {
         float fireInput = Input.GetAxis("Fire1");
 
-        if (fireInput == 1 && !weapon.InUse)
+        if (fireInput == 1 && !m_Weapon.InUse)
         {
             animator.Play("Character_Handgun_Shoot");
-            weapon.Attack();
+            m_Weapon.Attack();
         }
     }
 }

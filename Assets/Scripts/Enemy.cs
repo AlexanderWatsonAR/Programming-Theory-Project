@@ -8,23 +8,53 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] Weapon weapon;
-     BehaviourState behaviourState;
-    [SerializeField] float health;
+    [SerializeField] Weapon m_Weapon;
+    [SerializeField] float m_HitPoints;
+    [SerializeField] float m_MovementSpeed;
+
+    float m_MaxHitPoints;
+    ChaseState m_ChaseState;
+    FleeState m_FleeState;
+    BehaviourState m_ActiveState;
+
+    public float MovementSpeed => m_MovementSpeed;
+    public Weapon Weapon => m_Weapon;
+
+    public float HitPoints
+    {
+        get { return m_HitPoints; }
+        set 
+        {
+            m_HitPoints = value;
+
+            if(m_HitPoints <= (m_MaxHitPoints * 0.2f))
+            {
+                m_ActiveState = m_FleeState;
+            }
+
+            if(m_HitPoints == m_MaxHitPoints)
+            {
+                m_ActiveState = m_ChaseState;
+            }
+        }
+    }
 
     private void Start()
     {
-        behaviourState = new ChaseState();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerController controller = player.GetComponent<PlayerController>();
+
+        m_ChaseState = new ChaseState(controller, this);
+        m_FleeState = new FleeState(controller, this);
+        m_ActiveState = m_ChaseState;
+        
+        m_MaxHitPoints = m_HitPoints;
     }
 
     // Update is called once per frame
     void Update()
     {
-        behaviourState.Movement();
-        behaviourState.Attack();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
+        m_ActiveState.Movement();
+        m_ActiveState.Attack();
     }
 }

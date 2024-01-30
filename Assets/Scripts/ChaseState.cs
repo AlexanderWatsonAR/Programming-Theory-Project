@@ -1,21 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-// TODO: Move to target, stop, then attack. if target is still avile and in range attack again.
-// otherwise move to chase target
-
 public class ChaseState : BehaviourState
 {
+    public ChaseState(PlayerController player, Enemy enemy) : base(player, enemy)
+    {
 
+    }
 
     public override void Attack()
     {
-        throw new System.NotImplementedException();
+        Vector3 dirToPlayer = Extensions.DirectionToTarget(m_Enemy.transform.position, m_Player.transform.position);
+
+        float dotProduct = Vector3.Dot(m_Enemy.transform.forward, dirToPlayer);
+
+        //if player is in front of the enemy.
+        if (dotProduct > 0.78f)
+        {
+
+            if(Vector3.Distance(m_Enemy.transform.position, m_Enemy.transform.position) <= 2)
+            {
+                m_Enemy.Weapon.Attack();
+            }
+
+        }
+
     }
 
     public override void Movement()
     {
-        throw new System.NotImplementedException();
+        Vector3 dirToPlayer = Extensions.DirectionToTarget(m_Enemy.transform.position, m_Player.transform.position);
+
+        m_Enemy.transform.forward = dirToPlayer;
+        m_EnemyController.Move(m_Enemy.MovementSpeed * Time.deltaTime * dirToPlayer);
     }
 }
