@@ -19,6 +19,7 @@ public class MeleeWeapon : Weapon
     {
         GameObject token = Instantiate(m_DamageToken.gameObject);
         token.transform.position = transform.position;
+        token.transform.SetParent(transform, true);
         token.GetComponent<DamageTrigger>().Damage = m_Damage;
 
     }
