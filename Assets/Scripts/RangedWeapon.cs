@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class RangedWeapon : Weapon
 {
-    [SerializeField] GameObject projectile;
-    [SerializeField] Vector3 localSpawnPosition;
-    [SerializeField] float projectileSpeed;
-    [SerializeField] float projectileDamage;
-    [SerializeField] float ammoCapacity;
+    [SerializeField] GameObject m_Projectile;
+    [SerializeField] Vector3 m_LocalSpawnPosition;
+    [SerializeField] float m_ProjectileSpeed;
+    [SerializeField] float m_ProjectileDamage;
+    [SerializeField] float m_AmmoCapacity;
 
     protected override void Use()
     {
-        GameObject projectileClone = Instantiate(projectile);
-        Vector3 worldPos = transform.TransformPoint(localSpawnPosition);
+        GameObject projectileClone = Instantiate(m_Projectile);
+        Vector3 worldPos = transform.TransformPoint(m_LocalSpawnPosition);
         projectileClone.transform.position = worldPos;
         Rigidbody body = projectileClone.GetComponent<Rigidbody>();
-        body.velocity = PlayerController.Direction * projectileSpeed;
+        body.velocity = transform.right * m_ProjectileSpeed;
+        Destroy(projectileClone, 10f);
 
     }
 
